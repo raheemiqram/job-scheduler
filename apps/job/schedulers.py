@@ -2,6 +2,10 @@ import threading
 import time
 from django.utils.timezone import now
 from .models import Job
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+
+channel_layer = get_channel_layer()
 
 MAX_CONCURRENT_JOBS = 3
 running_jobs = 0
@@ -24,6 +28,15 @@ def process_job(job):
         job.save()
 
     running_jobs -= 1
+
+    async_to_sync(channel_layer.group_send)(
+        "dashboard_analytics",
+        {
+            "type": "send_charging_session_status",
+            "message": message
+        }
+    )
+
     run_scheduler()
 
 
