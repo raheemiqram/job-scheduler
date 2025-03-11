@@ -53,7 +53,9 @@
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="running_jobs">{{ running_jobs }}</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="running_jobs">{{
+                                    running_jobs }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,7 +76,8 @@
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                             Completed Jobs
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="completed_jobs">{{ completed_jobs }} </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="completed_jobs">{{ completed_jobs }}
+                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -93,7 +96,9 @@
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="failed_jobs">{{ failed_jobs }}</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="failed_jobs">{{ failed_jobs
+                                    }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +118,9 @@
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                             Average Waiting Time
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="average_wait_time">{{ average_wait_time }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="average_wait_time">{{ average_wait_time
+                            }}
+                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clock fa-2x text-gray-300"></i>
@@ -194,7 +201,6 @@
         $("#high_jobs").text(data["high_jobs"]);
         $("#medium_jobs").text(data["medium_jobs"]);
         $("#low_jobs").text(data["low_jobs"]);
-
         }
 
     socket.onclose = function(event) {
