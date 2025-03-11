@@ -53,7 +53,7 @@ Ensure you have the following installed:
 ## **For Ubuntu**
 ### **2. Clone the Repository**
 - Clone the repository to your local machine using the following command:
-  - `git clone https://github.com/YOUR_USERNAME/job-scheduler.git`
+  - `git clone https://github.com/raheemiqram/job-scheduler.git`
   - `cd job-scheduler`
 
 ### **3. Create a Virtual Environment**
@@ -82,7 +82,7 @@ Ensure you have the following installed:
 ## **For Windows**
 ### **2. Clone the Repository**
 - Clone the repository to your local machine using the following command:
-  - `git clone https://github.com/YOUR_USERNAME/job-scheduler.git`
+  - `git clone https://github.com/raheemiqram/job-scheduler.git`
   - `cd job-scheduler`
 
 ### **3. Create a Virtual Environment**
@@ -123,4 +123,4 @@ Messages are sent in real time to update the dashboard when job statuses change.
 ---
 
 ## **Contributors**
-- Your Name - [GitHub](https://github.com/raheemiqram)
+- Your Name - [GitHub](https://github.com/raheemiqram/)
