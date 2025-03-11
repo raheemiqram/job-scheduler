@@ -76,7 +76,8 @@
                             <!--                                Profile-->
                             <!--                            </a>-->
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'logout' %}" data-toggle="modal" data-target="#logoutModal">
+                            <a class="dropdown-item" href="{% url 'logout' %}" data-toggle="modal"
+                               data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a>
@@ -88,15 +89,17 @@
             </nav>
             <!-- End of Topbar -->
 
+
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <div class="card">
-                    {% block dashboard_content %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% block dashboard_content %}
 
-                    {% endblock %}
-                </div>
-
-
+                {% endblock %}
             </div>
             <!-- /.container-fluid -->
 

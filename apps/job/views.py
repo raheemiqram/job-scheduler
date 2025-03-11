@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Avg, ExpressionWrapper, F
-from django.forms import fields
+from django.contrib import messages
+from django.db.models import Avg
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView
@@ -8,6 +8,7 @@ from django.views.generic import TemplateView, ListView, CreateView
 from apps.job.forms import JobForm
 from apps.job.models import Job
 from apps.job.schedulers import run_scheduler
+from apps.job.utils import format_duration
 
 
 class DashboardView(TemplateView):
@@ -19,7 +20,12 @@ class DashboardView(TemplateView):
         total_jobs = job_queryset.count()
         pending_jobs = job_queryset.filter(status='Pending').count()
         running_jobs = job_queryset.filter(status='Running').count()
-        completed_jobs = job_queryset.filter(status='Completed').exclude(started_at=None)
+        completed_jobs = job_queryset.filter(status='Completed').count()
+        failed_jobs = job_queryset.filter(status='Failed').count()
+
+        high_jobs = job_queryset.filter(priority='High').count()
+        medium_jobs = job_queryset.filter(priority='Medium').count()
+        low_jobs = job_queryset.filter(priority='Lows').count()
 
         avg_wait_time = job_queryset.filter(status='Completed').aggregate(avg_wait=Avg('wait_time'))
 
@@ -28,7 +34,11 @@ class DashboardView(TemplateView):
             "pending_jobs": pending_jobs,
             "running_jobs": running_jobs,
             "completed_jobs": completed_jobs,
-            "average_wait_time": avg_wait_time['avg_wait'] if avg_wait_time else None
+            "failed_jobs": failed_jobs,
+            "high_jobs": high_jobs,
+            "medium_jobs": medium_jobs,
+            "low_jobs": low_jobs,
+            "average_wait_time": format_duration(avg_wait_time['avg_wait']) if avg_wait_time else None
         })
 
 
@@ -64,5 +74,8 @@ class JobCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         response = super().form_valid(form)
+
+        messages.success(self.request, "Jobs create successfully")
+
         run_scheduler()
         return response
