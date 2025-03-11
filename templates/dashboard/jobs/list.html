@@ -9,23 +9,52 @@
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>Job Name</th>
+            <th>Estimated Duration</th>
+            <th>Priority</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Created At</th>
+            <th>Started At</th>
+            <th>Completed At</th>
         </tr>
         </thead>
         <tbody>
+        {% for job in jobs %}
         <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
+            <td>{{ job.name }}</td>
+            <td>{{ job.estimated_duration }} sec</td>
+            <td>
+                {% if job.priority == 'High' %}
+                <span class="badge badge-danger">{{ job.priority }}</span>
+                {% elif job.priority == 'Medium' %}
+                <span class="badge badge-warning">{{ job.priority }}</span>
+                {% else %}
+                <span class="badge badge-info">{{ job.priority }}</span>
+                {% endif %}
+            </td>
+
+            <td>{{ job.deadline }}</td>
+            <td>
+                {% if job.status == 'Pending' %}
+                <span class="badge badge-secondary">{{ job.status }}</span>
+                {% elif job.status == 'Running' %}
+                <span class="badge badge-primary">{{ job.status }}</span>
+                {% elif job.status == 'Completed' %}
+                <span class="badge badge-success">{{ job.status }}</span>
+                {% else %}
+                <span class="badge badge-dark">{{ job.status }}</span>
+                {% endif %}
+            </td>
+            <td>{{ job.created_at }}</td>
+            <td>{{ job.started_at }}</td>
+            <td>{{ job.completed_at }}</td>
         </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No jobs found.</td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>
