@@ -1,6 +1,6 @@
 # Django Job Scheduler
 
-This is a Django-based Job Scheduling system with real-time updates using WebSockets and Celery.  
+This is a Django-based Job Scheduling system with real-time updates using WebSockets.  
 It allows users to submit jobs, monitor their statuses, and process them based on priority and deadlines.
 
 ## **Features**
@@ -44,9 +44,9 @@ Here's a screenshot of the form used by users to submit new jobs:
 ### **1. Prerequisites**
 Ensure you have the following installed:
 - Python 3.10+
-- PostgreSQL (or SQLite)
+- PostgreSQL
 - Redis (for Celery)
-- Node.js (if using WebSockets with a frontend)
+- Javascript (if using WebSockets with a frontend)
 
 ---
 
@@ -64,7 +64,7 @@ Ensure you have the following installed:
 
 ### **4. Install Dependencies**
 - Install the project dependencies by running:
-  - `pip install -r requirements.txt`
+  - `pip install -r requirements/base.txt`
 
 ### **5. Apply Migrations**
 - Apply the database migrations by running:
@@ -93,7 +93,7 @@ Ensure you have the following installed:
 
 ### **4. Install Dependencies**
 - Install the project dependencies by running:
-  - `pip install -r requirements.txt`
+  - `pip install -r requirements/base.txt`
 
 ### **5. Apply Migrations**
 - Apply the database migrations by running:
@@ -111,7 +111,6 @@ Ensure you have the following installed:
 - **POST `/api/jobs/`**: Submit a new job.
 - **GET `/api/jobs/`**: List all jobs.
 - **GET `/api/jobs/<id>/`**: Get job details by ID.
-- **GET `/api/jobs/user/`**: List jobs for the logged-in user.
 
 ---
 
