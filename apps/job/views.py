@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db.models import Avg
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView
 
@@ -17,7 +17,10 @@ class DashboardView(TemplateView):
         job_queryset = Job.objects.all() if self.request.user.is_superuser else Job.objects.filter(
             user=self.request.user)
         data = get_dashboard_analytics(job_queryset)
-        return render(request, 'dashboard/index.html', data)
+        if self.request.user.is_superuser:
+            return render(request, 'dashboard/index.html', data)
+        else:
+            return redirect(reverse_lazy('job-list'))
 
 
 class JobListView(LoginRequiredMixin, ListView):

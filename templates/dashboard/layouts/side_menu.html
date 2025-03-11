@@ -12,11 +12,13 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
+    {% if request.user.is_superuser %}
     <li class="nav-item">
         <a class="nav-link" href="{% url 'dashboard' %}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
+    {% endif %}
 
     <!-- Divider -->
     <hr class="sidebar-divider">

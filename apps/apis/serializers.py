@@ -8,3 +8,9 @@ class JobSerializer(serializers.ModelSerializer):
         model = Job
         fields = '__all__'
         read_only_fields = ['status', 'started_at', 'completed_at', 'user']
+
+
+class JobStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Job
+        fields = ['status']
