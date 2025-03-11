@@ -12,9 +12,9 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                           Total Jobjs
+                            Total Jobjs
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_jobs }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="total_jobs">{{ total_jobs }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -33,7 +33,7 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Pending Jobs
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pending_jobs }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="pending_jobs">{{ pending_jobs }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ running_jobs }}</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="running_jobs">{{ running_jobs }}</div>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                             Completed Jobs
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ completed_jobs }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="completed_jobs">{{ completed_jobs }} </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -93,7 +93,7 @@
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ failed_jobs }}</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="failed_jobs">{{ failed_jobs }}</div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                             Average Waiting Time
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ average_wait_time }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="average_wait_time">{{ average_wait_time }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clock fa-2x text-gray-300"></i>
@@ -131,7 +131,7 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             High Priority
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ high_jobs }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="high_jobs">{{ high_jobs }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -148,7 +148,7 @@
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Medium Priority
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ medium_jobs }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="medium_jobs">{{ medium_jobs }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -165,7 +165,7 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Low Priority
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ low_jobs }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="low_jobs">{{ low_jobs }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -176,4 +176,29 @@
     </div>
 
 </div>
+{% endblock %}
+
+
+{% block custom_scripts %}
+<script>
+    var socket = new WebSocket('ws://' + window.location.host + '/ws/dashboard-analytics/');
+    socket.onmessage = function(event) {
+        var data = JSON.parse(event.data);
+        var data = data["message"]
+        $("#total_jobs").text(data["total_jobs"]);
+        $("#pending_jobs").text(data["pending_jobs"]);
+        $("#running_jobs").text(data["running_jobs"]);
+        $("#completed_jobs").text(data["completed_jobs"]);
+        $("#failed_jobs").text(data["failed_jobs"]);
+        $("#average_wait_time").text(data["average_wait_time"]);
+        $("#high_jobs").text(data["high_jobs"]);
+        $("#medium_jobs").text(data["medium_jobs"]);
+        $("#low_jobs").text(data["low_jobs"]);
+
+        }
+
+    socket.onclose = function(event) {
+        console.error('WebSocket closed unexpectedly');
+    }
+</script>
 {% endblock %}

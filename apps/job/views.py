@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, ListView, CreateView
 from apps.job.forms import JobForm
 from apps.job.models import Job
 from apps.job.schedulers import run_scheduler
-from apps.job.utils import format_duration
+from apps.job.services import get_dashboard_analytics
 
 
 class DashboardView(TemplateView):
@@ -16,30 +16,8 @@ class DashboardView(TemplateView):
     def get(self, request, *args, **kwargs):
         job_queryset = Job.objects.all() if self.request.user.is_superuser else Job.objects.filter(
             user=self.request.user)
-
-        total_jobs = job_queryset.count()
-        pending_jobs = job_queryset.filter(status='Pending').count()
-        running_jobs = job_queryset.filter(status='Running').count()
-        completed_jobs = job_queryset.filter(status='Completed').count()
-        failed_jobs = job_queryset.filter(status='Failed').count()
-
-        high_jobs = job_queryset.filter(priority='High').count()
-        medium_jobs = job_queryset.filter(priority='Medium').count()
-        low_jobs = job_queryset.filter(priority='Lows').count()
-
-        avg_wait_time = job_queryset.filter(status='Completed').aggregate(avg_wait=Avg('wait_time'))
-
-        return render(request, 'dashboard/index.html', {
-            "total_jobs": total_jobs,
-            "pending_jobs": pending_jobs,
-            "running_jobs": running_jobs,
-            "completed_jobs": completed_jobs,
-            "failed_jobs": failed_jobs,
-            "high_jobs": high_jobs,
-            "medium_jobs": medium_jobs,
-            "low_jobs": low_jobs,
-            "average_wait_time": format_duration(avg_wait_time['avg_wait']) if avg_wait_time else None
-        })
+        data = get_dashboard_analytics(job_queryset)
+        return render(request, 'dashboard/index.html', data)
 
 
 class JobListView(LoginRequiredMixin, ListView):
@@ -74,8 +52,6 @@ class JobCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         response = super().form_valid(form)
-
         messages.success(self.request, "Jobs create successfully")
-
         run_scheduler()
         return response

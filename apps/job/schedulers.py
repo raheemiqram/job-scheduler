@@ -2,10 +2,10 @@ import threading
 import time
 from django.utils.timezone import now
 from .models import Job
-from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
-channel_layer = get_channel_layer()
+from .services import get_dashboard_analytics
 
 MAX_CONCURRENT_JOBS = 3
 running_jobs = 0
@@ -29,11 +29,12 @@ def process_job(job):
 
     running_jobs -= 1
 
+    channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
         "dashboard_analytics",
         {
-            "type": "send_charging_session_status",
-            "message": message
+            "type": "send_dashboard_data",
+            "message": get_dashboard_analytics(Job.objects.all())
         }
     )
 
