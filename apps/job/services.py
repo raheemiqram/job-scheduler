@@ -12,7 +12,7 @@ def get_dashboard_analytics(job_queryset):
 
     high_jobs = job_queryset.filter(priority='High').count()
     medium_jobs = job_queryset.filter(priority='Medium').count()
-    low_jobs = job_queryset.filter(priority='Lows').count()
+    low_jobs = job_queryset.filter(priority='Low').count()
 
     avg_wait_time = job_queryset.filter(status='Completed').aggregate(avg_wait=Avg('wait_time'))
     data = {
