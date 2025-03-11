@@ -1,10 +1,9 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 
-def dashboard_view(request):
-    return render(request, "dashboard/index.html")  # Dashboard template
+from apps.job.views import DashboardView, JobListView
 
 urlpatterns = [
-    path("", login_required(dashboard_view), name="dashboard"),
+    path("", login_required(DashboardView.as_view()), name="dashboard"),
+    path("job/list/", login_required(JobListView.as_view()), name="job-list"),
 ]

@@ -144,4 +144,4 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = '/dashboard/'  # Redirect after login
-LOGOUT_REDIRECT_URL = 'account/login/'     # Redirect after logout
+LOGOUT_REDIRECT_URL = '/account/login/'     # Redirect after logout
