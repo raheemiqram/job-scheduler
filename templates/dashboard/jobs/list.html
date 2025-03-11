@@ -4,7 +4,13 @@
 
 {% block dashboard_content %}
 
-<h3>Job List</h3><br>
+<div class="flex m-2" >
+    <h3>Job List</h3><br>
+
+    <a href="{% url 'job-create' %}" class="btn btn-primary mb-3">Create New Job</a>
+</div>
+
+
 <div class="table-responsive m-1">
 
     <ul class="nav nav-tabs" id="jobTab" role="tablist">

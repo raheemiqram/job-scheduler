@@ -26,5 +26,12 @@ class Job(models.Model):
     started_at = models.DateTimeField(null=True, blank=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 
+    wait_time = models.DurationField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.started_at and self.created_at:
+            self.wait_time = self.started_at - self.created_at
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
