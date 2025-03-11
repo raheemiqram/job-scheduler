@@ -24,7 +24,6 @@ class DashboardView(TemplateView):
         #     select={'wait_time': "strftime('%s', started_at) - strftime('%s', created_at)"}
         # ).aggregate(avg_wait_time=Avg('wait_time'))['avg_wait_time']
 
-
         return render(request, 'dashboard/index.html', {
             "total_jobs": total_jobs,
             "pending_jobs": pending_jobs,
@@ -38,10 +37,20 @@ class JobListView(LoginRequiredMixin, ListView):
     model = Job
     template_name = "dashboard/jobs/list.html"
     context_object_name = "jobs"
-    ordering = ["-priority", "deadline"]  # Order by priority first, then by deadline
+    ordering = ["-priority", "deadline"]
 
     def get_queryset(self):
         queryset = Job.objects.all()
         if not self.request.user.is_superuser:
             queryset = queryset.filter(user=self.request.user)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        queryset = self.get_queryset()
+
+        context['pending_jobs'] = queryset.filter(status='Pending')
+        context['running_jobs'] = queryset.filter(status='Running')
+        context['completed_jobs'] = queryset.filter(status='Completed')
+
+        return context
