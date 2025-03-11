@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'drf_spectacular',
+    'rest_framework_simplejwt',
     "apps.job",
     "apps.account"
 ]
@@ -154,3 +156,27 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = '/dashboard/'  # Redirect after login
 LOGOUT_REDIRECT_URL = '/account/login/'  # Redirect after logout
+
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+       "rest_framework_simplejwt.authentication.JWTAuthentication"
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        # "apps.core.custom_permissions.DashboardUserHasActionPermissions",
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    # "DEFAULT_PAGINATION_CLASS": "apps.core.utils.CustomPageNumberPagination",
+    "PAGE_SIZE": 20,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Job Schedule',
+    'DESCRIPTION': '',
+    'VERSION': '1.0.0',
+}
