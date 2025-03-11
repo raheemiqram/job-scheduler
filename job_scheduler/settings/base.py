@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-to8-3+=p^61d6@c&*jds%=vp=yugfmdw$5k6j*l(=h=ejrjzu8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.job"
+    "apps.job",
+    "apps.account"
 ]
 
 MIDDLEWARE = [
@@ -115,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Dubai/Asia"
+TIME_ZONE = "Asia/Dubai"
 
 USE_I18N = True
 
@@ -141,3 +142,6 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     os.path.join(ROOT_DIR, 'static'),
 ]
+
+LOGIN_REDIRECT_URL = '/dashboard/'  # Redirect after login
+LOGOUT_REDIRECT_URL = '/login/'     # Redirect after logout
