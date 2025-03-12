@@ -1,14 +1,15 @@
+from django.test import TestCase
 from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
 from rest_framework.reverse import reverse_lazy
-from rest_framework.test import APITestCase
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.test import APIClient
 
 from apps.job.models import Job
 
 
-class JobAPITestCase(APITestCase):
+class JobAPITestCase(TestCase):
 
     def setUp(self):
         """Set up test users and initial data."""
@@ -18,21 +19,21 @@ class JobAPITestCase(APITestCase):
         self.job1 = Job.objects.create(
             user=self.user,
             name="User Job",
-            estimated_duration=60,
+            estimated_duration=1,
             priority=1,
             deadline=now() + timedelta(hours=1),
-            status="Pending"
+            status="Completed"
         )
 
         self.job2 = Job.objects.create(
             user=self.admin,
             name="Admin Job",
-            estimated_duration=120,
+            estimated_duration=1,
             priority=2,
             deadline=now() + timedelta(hours=2),
-            status="Pending"
+            status="Completed"
         )
-
+        self.client = APIClient()
         self.job_list_url = reverse_lazy('job-list-api')
         self.token_url = "/api/v1/token/"  # Adjust this if you have a different JWT login endpoint.
 
@@ -52,7 +53,7 @@ class JobAPITestCase(APITestCase):
 
         data = {
             "name": "New Test Job",
-            "estimated_duration": 90,
+            "estimated_duration": 1,
             "priority": 3,
             "deadline": (now() + timedelta(days=1)).isoformat(),
         }
@@ -85,7 +86,7 @@ class JobAPITestCase(APITestCase):
 
         response = self.client.get(reverse_lazy('job-status-api', kwargs={'pk': self.job1.id}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["status"], "Pending")
+        self.assertEqual(response.data["status"], "Completed")
 
     def test_job_status_unauthorized(self):
         """Test that a user cannot fetch another user's job status."""
@@ -100,7 +101,7 @@ class JobAPITestCase(APITestCase):
 
         response = self.client.get(reverse_lazy('job-status-api', kwargs={'pk': self.job1.id}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["status"], "Pending")
+        self.assertEqual(response.data["status"], "Completed")
 
     def test_unauthenticated_access(self):
         """Test that unauthenticated users cannot access job list."""

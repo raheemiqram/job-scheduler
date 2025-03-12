@@ -74,10 +74,28 @@ Ensure you have the following installed:
 - Create a superuser account for admin access by running:
   - `python manage.py createsuperuser`
 
-### **7. Run the Django Development Server**
+
+### **7. Feed sample data**
+- Start the Django development server by running:
+  - `python manage.py create_sample_jobs`
+
+### **8. Run the Django Development Server**
 - Start the Django development server by running:
   - `python manage.py runserver`
 
+
+### **9. User Credentials**
+- : Admin user
+  - username: admin
+  - password: admin
+- : Normal user
+  - username: sample_user
+  - password: 1234
+
+
+### **9. Run the Django Test Server**
+- Start the Django test server by running:
+  - `python manage.py test`
 
 ## **For Windows**
 ### **2. Clone the Repository**
@@ -97,15 +115,15 @@ Ensure you have the following installed:
 
 ### **5. Apply Migrations**
 - Apply the database migrations by running:
-  - `python manage.py migrate`
+  - `python .\manage.py migrate`
 
 ### **6. Create a Superuser**
 - Create a superuser account for admin access by running:
-  - `python manage.py createsuperuser`
+  - `python .\manage.py createsuperuser`
 
 ### **7. Run the Django Development Server**
 - Start the Django development server by running:
-  - `python manage.py runserver`
+  - `python .\manage.py runserver`
 
 ## **API Endpoints**
 - **POST `/api/jobs/`**: Submit a new job.
