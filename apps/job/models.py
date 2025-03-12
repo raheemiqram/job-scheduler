@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 class Job(models.Model):
     PRIORITY_CHOICES = [
-        ('High', 'High'),
-        ('Medium', 'Medium'),
-        ('Low', 'Low'),
+        (1, 'High'),
+        (2, 'Medium'),
+        (3, 'Low'),
     ]
 
     STATUS_CHOICES = [
@@ -19,7 +19,7 @@ class Job(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     estimated_duration = models.IntegerField(help_text="Duration in seconds")
-    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+    priority = models.IntegerField(choices=PRIORITY_CHOICES)
     deadline = models.DateTimeField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
     created_at = models.DateTimeField(auto_now_add=True)

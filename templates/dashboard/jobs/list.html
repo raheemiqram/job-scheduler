@@ -51,12 +51,12 @@
                     <td>{{ job.name }}</td>
                     <td>{{ job.estimated_duration }} sec</td>
                     <td>
-                        {% if job.priority == 'High' %}
-                        <span class="badge badge-danger">{{ job.priority }}</span>
-                        {% elif job.priority == 'Medium' %}
-                        <span class="badge badge-warning">{{ job.priority }}</span>
+                        {% if job.priority == 1 %}
+                        <span class="badge badge-danger">{{ job.get_priority_display }}</span>
+                        {% elif job.priority == 2 %}
+                        <span class="badge badge-warning">{{ job.get_priority_display }}</span>
                         {% else %}
-                        <span class="badge badge-info">{{ job.priority }}</span>
+                        <span class="badge badge-info">{{ job.get_priority_display }}</span>
                         {% endif %}
                     </td>
                     <td>{{ job.deadline }}</td>
@@ -97,12 +97,12 @@
                     <td>{{ job.name }}</td>
                     <td>{{ job.estimated_duration }} sec</td>
                     <td>
-                        {% if job.priority == 'High' %}
-                        <span class="badge badge-danger">{{ job.priority }}</span>
-                        {% elif job.priority == 'Medium' %}
-                        <span class="badge badge-warning">{{ job.priority }}</span>
+                        {% if job.priority == 1 %}
+                        <span class="badge badge-danger">{{ job.get_priority_display }}</span>
+                        {% elif job.priority == 2 %}
+                        <span class="badge badge-warning">{{ job.get_priority_display }}</span>
                         {% else %}
-                        <span class="badge badge-info">{{ job.priority }}</span>
+                        <span class="badge badge-info">{{ job.get_priority_display }}</span>
                         {% endif %}
                     </td>
                     <td>{{ job.deadline }}</td>
@@ -143,12 +143,12 @@
                     <td>{{ job.name }}</td>
                     <td>{{ job.estimated_duration }} sec</td>
                     <td>
-                        {% if job.priority == 'High' %}
-                        <span class="badge badge-danger">{{ job.priority }}</span>
-                        {% elif job.priority == 'Medium' %}
-                        <span class="badge badge-warning">{{ job.priority }}</span>
+                        {% if job.priority == 1 %}
+                        <span class="badge badge-danger">{{ job.get_priority_display }}</span>
+                        {% elif job.priority == 2 %}
+                        <span class="badge badge-warning">{{ job.get_priority_display }}</span>
                         {% else %}
-                        <span class="badge badge-info">{{ job.priority }}</span>
+                        <span class="badge badge-info">{{ job.get_priority_display }}</span>
                         {% endif %}
                     </td>
                     <td>{{ job.deadline }}</td>

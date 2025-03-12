@@ -15,8 +15,8 @@ class Command(BaseCommand):
         user, created = User.objects.get_or_create(username='sample_user', email='sample_user@example.com')
 
         # Define sample job priorities and statuses
-        priorities = ['High', 'Medium', 'Low']
-        statuses = ['Pending', 'Running', 'Completed', 'Failed']
+        priorities = [1, 2, 3]
+        statuses = ['Pending', 'Completed', 'Failed']
 
         # Generate sample jobs
         for i in range(10):  # Change the range to generate more/less sample data

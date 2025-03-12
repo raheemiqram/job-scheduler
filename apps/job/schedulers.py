@@ -46,7 +46,7 @@ def run_scheduler():
     if running_jobs >= MAX_CONCURRENT_JOBS:
         return
 
-    pending_jobs = Job.objects.filter(status='Pending').order_by('-priority', 'deadline')
+    pending_jobs = Job.objects.filter(status='Pending').order_by('priority', 'deadline')
     for job in pending_jobs:
         if running_jobs < MAX_CONCURRENT_JOBS:
             running_jobs += 1
